@@ -1,11 +1,3 @@
-const apiGETData = {
-  baseAPIKey: "api_key=a7181f2ad447e5c2b19cc987dd2cd250",
-  topRatedMovieArray: "https://api.themoviedb.org/3/discover/movie?",
-  page: "&language=en-US&page=",
-  releaseYear: "&primary_release_year=",
-  imgBase: "https://image.tmdb.org/t/p/w300",
-};
-
 const posterContainer = document.querySelector(".poster-container");
 const tileContainer = document.querySelector(".tiles-container");
 const poster = document.createElement("img");
@@ -17,14 +9,9 @@ const answer = document.querySelector("#answer");
 const answerForm = document.querySelector("#answer-form");
 const submitBtn = document.querySelector("#submit-btn");
 const totalPoints = document.querySelector(".total-points span");
-let totalQuestions = 10;
 let currentMovieQuestion = 0;
 let chosenMovie;
 let underscoredTitle;
-
-function random(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
 
 function newMovieArr() {
   //concatenate URL
@@ -359,10 +346,6 @@ function shuffle(array) {
 
   //return array;
   return array;
-}
-
-function random(min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 function createLettersDiv(string, element, className) {
