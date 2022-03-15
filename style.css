@@ -61,13 +61,9 @@ h1 {
 .total-points {
   text-align: center;
 }
-.clicked-tile {
-  background: none;
-  border: none;
-  width: 48px;
-  height: 72px;
-  text-align: center;
-  display: block;
+.tile.clicked-tile {
+  opacity: 0;
+  z-index: -100;
 }
 
 .tiles-container {

@@ -3,10 +3,12 @@ import { FORMAT } from "../config.js";
 
 class ScrambledTitleView extends view {
   _parentEl = document.querySelector("#dropZone-wrapper");
+  _attachEl = document.querySelector("#letter-choice-wrapper");
   _errorMessage = "Unable to load Movie Title. Please try again";
 
   constructor() {
     super();
+    this._letterMoveHandler();
   }
 
   _createTitleDiv(index, letter, className, isSpecialChar) {
@@ -14,7 +16,7 @@ class ScrambledTitleView extends view {
     //prettier-ignore
     className.split(" ").forEach((classname) => newDiv.classList.add(classname));
     //prettier-ignore
-    isSpecialChar ? (newDiv.innerText = letter) : (newDiv.dataset.letter = `${index}`);
+    isSpecialChar ? (newDiv.innerText = letter) : (newDiv.dataset.letter = letter.toUpperCase());
     this._parentEl.appendChild(newDiv);
   }
 
@@ -32,12 +34,34 @@ class ScrambledTitleView extends view {
     //const markup = `<div class="special-char-placeholder border-true">${finalString}</div>`;
   }
 
-  addHandlerClick(handler) {
-    this._parentEl.addEventListener("click", function (e) {
-      const btn = e.target.closest(".btn");
-      if (!btn) return;
-      handler();
+  checkAnswer() {
+    this._parentEl.querySelectorAll(".letter-choice").forEach((el) => {
+      console.log(el.dataset.letter, "<==== child");
+      console.log(el.parentElement.dataset.letter, "<==== parent");
     });
+
+    const allFieldsPopulated = Array.from(
+      document.querySelectorAll(".title-placeholder")
+    ).every((div) => div.childElementCount > 0);
+    if (!allFieldsPopulated) return allFieldsPopulated;
+    return Array.from(this._parentEl.querySelectorAll(".letter-choice")).every(
+      (div) => div.parentElement.dataset.letter === div.dataset.letter
+    );
+  }
+
+  _moveLetter(e) {
+    const letter = e.target.closest(".letter-choice");
+    console.log(letter);
+    if (!letter) return;
+    console.log(letter);
+    console.log(this._attachEl);
+    this._attachEl.appendChild(letter);
+    letter.classList.add("border-true");
+    letter.classList.add("margin-between");
+  }
+
+  _letterMoveHandler() {
+    this._parentEl.addEventListener("click", this._moveLetter.bind(this));
   }
 }
 

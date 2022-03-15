@@ -1,10 +1,20 @@
-import { API_DATA, PAGES_MIN, PAGES_MAX, TOTAL_PAGES } from "./config.js";
+import {
+  API_DATA,
+  PAGES_MIN,
+  PAGES_MAX,
+  TOTAL_PAGES,
+  SCORE_VALUES,
+} from "./config.js";
 import * as helpers from "./helpers.js";
 
 export const state = {
   currentMovie: {},
   allMovies: [],
   pages: [],
+  totalPoints: 0,
+  currentPoints: 0,
+  answerValue: 0,
+  currentQuestion: 0,
 };
 
 async function getAllMovies() {
@@ -22,6 +32,10 @@ async function getAllMovies() {
   }
 
   //filterEnglishMovies();
+}
+
+export function setQuestionNum() {
+  state.currentQuestion++;
 }
 
 function getAllApiPages() {
@@ -52,6 +66,17 @@ function returnRandomMovie() {
   state.currentMovie = state.allMovies[randomIndex];
   state.allMovies.splice(randomIndex, 1);
   console.log(state.currentMovie);
+}
+
+export function removePoints(points) {
+  if (!state.answerValue > 0) return;
+  state.answerValue =
+    state.answerValue - points < 0 ? 0 : state.answerValue - points;
+}
+
+export function addToScore() {
+  state.currentPoints += state.answerValue;
+  state.answerValue = SCORE_VALUES.ANSWER_VALUE;
 }
 
 //function to remove non-english movies

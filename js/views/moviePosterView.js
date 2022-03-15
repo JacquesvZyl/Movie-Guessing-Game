@@ -17,6 +17,7 @@ class MoviePosterView extends view {
     `;
     this._clear();
     this._parentEl.insertAdjacentHTML("beforeend", markup);
+    console.dir(this._parentEl);
   }
 
   addHandlerClick(handler) {
@@ -31,11 +32,26 @@ class MoviePosterView extends view {
 export default new MoviePosterView();
 
 /* 
-function setDomData(movie) {
-  poster.classList.add("poster");
-  poster.src = apiGETData.imgBase + movie.poster_path;
-  posterContainer.style.backgroundImage = `url(${
-    apiGETData.imgBase + movie.poster_path
-  })`;
+function setTiles() {
+  let posterSquare =
+    parseInt(posterContainer.offsetWidth) *
+    parseInt(posterContainer.offsetHeight);
+  let tileSquare =
+    parseInt(createTile().offsetWidth) * parseInt(createTile().offsetHeight);
+  let totalTiles = posterSquare / tileSquare;
+
+  for (let i = 0; i < 25; i++) {
+    tileContainer.appendChild(createTile());
+  }
+}
+
+function createTile() {
+  const tile = document.createElement("div");
+  tile.classList.add("tile");
+  tile.offsetWidth = 60 + "px";
+  tile.offsetHeight = 90 + "px";
+  tile.innerText = "?";
+  return tile;
+}
 
 */
