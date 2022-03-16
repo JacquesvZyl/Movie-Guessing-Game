@@ -1,7 +1,18 @@
 import view from "./view.js";
+import { SCORE_VALUES } from "../config.js";
 
 class currentQuestionDataView extends view {
   _parentEl = document.querySelector(".current-question-data");
+  constructor() {
+    super();
+    this._renderInitialQuestionAmt();
+  }
+
+  _renderInitialQuestionAmt() {
+    this._parentEl.querySelector(
+      ".current-question span:nth-child(2"
+    ).innerText = SCORE_VALUES.TOTAL_QUESTIONS;
+  }
 
   renderTotalPoints(points) {
     this._parentEl.querySelector(".total-points span").innerText = points;

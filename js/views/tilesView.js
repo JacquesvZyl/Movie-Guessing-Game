@@ -1,5 +1,6 @@
 import view from "./view.js";
 import { API_DATA, NUM_TILES_IN_ROW, TILES_SYMBOL } from "../config.js";
+import * as helpers from "../helpers.js";
 
 class TilesView extends view {
   _parentEl = document.querySelector(".tiles-container");
@@ -18,6 +19,18 @@ class TilesView extends view {
     return tile;
   }
 
+  removeTile(tile) {
+    tile.classList.add("clicked-tile");
+  }
+
+  _removeRandomTile() {
+    const tileAmt = NUM_TILES_IN_ROW * NUM_TILES_IN_ROW - 1;
+    const randomTileIndex = helpers.random(0, tileAmt);
+    document.querySelectorAll(".tile").forEach((tile, index) => {
+      index === randomTileIndex ? this.removeTile(tile) : "";
+    });
+  }
+
   renderData() {
     const width = Number(this._posterEl.offsetWidth);
     const height = Number(this._posterEl.offsetHeight);
@@ -27,6 +40,7 @@ class TilesView extends view {
     for (let i = 0; i < NUM_TILES_IN_ROW * NUM_TILES_IN_ROW; i++) {
       this._parentEl.appendChild(this._createTile(tileWidth, tileHeight));
     }
+    this._removeRandomTile();
   }
 
   addHandlerClick(handler) {
@@ -39,28 +53,3 @@ class TilesView extends view {
 }
 
 export default new TilesView();
-
-/* 
-function setTiles() {
-  let posterSquare =
-    parseInt(posterContainer.offsetWidth) *
-    parseInt(posterContainer.offsetHeight);
-  let tileSquare =
-    parseInt(createTile().offsetWidth) * parseInt(createTile().offsetHeight);
-  let totalTiles = posterSquare / tileSquare;
-
-  for (let i = 0; i < 25; i++) {
-    tileContainer.appendChild(createTile());
-  }
-}
-
-function createTile() {
-  const tile = document.createElement("div");
-  tile.classList.add("tile");
-  tile.offsetWidth = 60 + "px";
-  tile.offsetHeight = 90 + "px";
-  tile.innerText = "?";
-  return tile;
-}
-
-*/

@@ -15,9 +15,11 @@ export const state = {
   currentPoints: 0,
   answerValue: 0,
   currentQuestion: 0,
+  pointsOutOf: 0,
+  gameOver: false,
 };
 
-async function getAllMovies() {
+export async function getAllMovies() {
   try {
     getAllApiPages();
 
@@ -34,8 +36,20 @@ async function getAllMovies() {
   //filterEnglishMovies();
 }
 
+export function resetScores() {
+  state.totalPoints =
+    state.currentPoints =
+    state.currentQuestion =
+    state.pointsOutOf =
+      0;
+}
+
 export function setQuestionNum() {
   state.currentQuestion++;
+}
+
+function addToTotalPossiblePoints() {
+  state.pointsOutOf += SCORE_VALUES.ANSWER_VALUE;
 }
 
 function getAllApiPages() {
@@ -56,16 +70,11 @@ async function movieApiCall(url) {
   }
 }
 
-export async function fetchMovie() {
-  await getAllMovies();
-  returnRandomMovie();
-}
-
-function returnRandomMovie() {
+export function returnRandomMovie() {
   const randomIndex = helpers.random(0, state.allMovies.length - 1);
   state.currentMovie = state.allMovies[randomIndex];
   state.allMovies.splice(randomIndex, 1);
-  console.log(state.currentMovie);
+  addToTotalPossiblePoints();
 }
 
 export function removePoints(points) {
@@ -76,6 +85,7 @@ export function removePoints(points) {
 
 export function addToScore() {
   state.currentPoints += state.answerValue;
+  console.log(state.currentPoints, "<++ current POints");
   state.answerValue = SCORE_VALUES.ANSWER_VALUE;
 }
 

@@ -23,7 +23,6 @@ class ScrambledTitleView extends view {
   renderData(data) {
     this._clear();
     if (!data) return this.renderError();
-    this._data = data;
 
     data.title.split("").forEach((letter, i) => {
       const bool = letter.match(FORMAT);
@@ -35,11 +34,6 @@ class ScrambledTitleView extends view {
   }
 
   checkAnswer() {
-    this._parentEl.querySelectorAll(".letter-choice").forEach((el) => {
-      console.log(el.dataset.letter, "<==== child");
-      console.log(el.parentElement.dataset.letter, "<==== parent");
-    });
-
     const allFieldsPopulated = Array.from(
       document.querySelectorAll(".title-placeholder")
     ).every((div) => div.childElementCount > 0);

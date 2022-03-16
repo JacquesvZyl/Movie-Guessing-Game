@@ -24,17 +24,26 @@
         </div>
 
 
-        <div class="img-container">
+        <div class="movie-data-container">
+            <div class="points-value-container">
+                <h4>Answer Value: <span id="answer-value">100</span> points</h4>
 
-            <div class="poster-container"></div>
-            <div class="tiles-container"></div>
-        </div>
-        <div class="points-value-container">
-            <h4>Answer Value: <span id="answer-value">100</span> points</h4>
+            </div>
+            <div class="img-container">
+
+                <div class="poster-container"></div>
+                <div class="tiles-container"></div>
+            </div>
+            <div class="text-container">
+
+
+
+            </div>
 
         </div>
-        <div class="text-container">
-        </div>
+
+
+
 
 
         <div id="dropZone-wrapper"></div>
@@ -42,7 +51,8 @@
 
         <div class="button-container">
 
-            <button id="submit-btn">Submit Answer</button>
+            <button class="submit-btn btn-styled">Submit Answer</button>
+            <button class="next-btn btn-styled hidden">Next Movie >></button>
 
 
         </div>
@@ -62,7 +72,8 @@
             <div class="popup-text">
                 <i class="fas fa-check-circle"></i>
                 <p>Great!!</p>
-                <p>You scored <span>0</span> out of <span>1000</span></p>
+                <p>You scored <span class="popup-total-points">0</span> out of <span
+                        class="popup-possible-points">0</span></p>
                 <button class="btn btn-success play-again-btn">Play again</button>
                 <button class="close btn btn-success">Nah!</button>
             </div>

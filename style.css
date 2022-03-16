@@ -26,6 +26,20 @@ body {
   font-weight: bolder;
 }
 
+.movie-data-container {
+  display: flex;
+  padding: 0 30px;
+  max-width: 1200px;
+  max-height: 360px;
+  margin: auto;
+}
+
+.points-value-container,
+.img-container,
+.text-container {
+  flex: 1 1 0px;
+}
+
 .img-container {
   width: 90%;
   max-width: 1000px;
@@ -88,12 +102,12 @@ h1 {
   margin-top: 30px;
   margin-bottom: 30px;
 }
-.text-container {
-  /*  display: flex; */
+/* .text-container {
+
   text-align: center;
   margin: 30px auto;
   max-width: 1200px;
-}
+} */
 
 .button-container {
   display: flex;
@@ -101,8 +115,7 @@ h1 {
   margin: 20px 0px;
 }
 
-#submit-btn,
-#clear-btn {
+.btn-styled {
   display: flex;
   justify-content: center;
   background: none;
@@ -114,6 +127,20 @@ h1 {
   text-transform: uppercase;
 }
 
+/* .submit-btn,
+.next-btn,
+.clear-btn {
+  display: flex;
+  justify-content: center;
+  background: none;
+  border: 1px solid white;
+  margin: 10px;
+  padding: 0px 10px;
+  letter-spacing: 2px;
+  transition: all 0.3s ease-in-out;
+  text-transform: uppercase;
+}
+ */
 #next-question-btn {
   display: flex;
   justify-content: center;
