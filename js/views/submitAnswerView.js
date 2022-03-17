@@ -17,6 +17,7 @@ class SubmitAnswerView extends view {
   reset() {
     this._submitBtn.disabled = false;
     this._nextBtn.classList.add("hidden");
+    console.log("RESET COMPLETE");
   }
 
   // bool checks whether game is over or not

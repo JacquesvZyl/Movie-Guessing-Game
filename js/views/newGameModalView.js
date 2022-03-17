@@ -12,6 +12,7 @@ class newGameModalPopup extends view {
 
   constructor() {
     super();
+    this._addHandlerClickQuit();
   }
 
   renderData(totalScore, totalPossiblePoints) {
@@ -20,6 +21,14 @@ class newGameModalPopup extends view {
   }
 
   // createLettersDiv(movie.original_title, letterChoiceWrapper, "letter-choice");
+
+  _addHandlerClickQuit() {
+    this._parentEl.addEventListener("click", (e) => {
+      const btn = e.target.closest(".close");
+      if (!btn) return;
+      this.toggleWindow();
+    });
+  }
 
   addHandlerClickPlayAgain(handler) {
     this._parentEl.addEventListener("click", (e) => {

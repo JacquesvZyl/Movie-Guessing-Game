@@ -13,7 +13,6 @@ import newGameModalView from "./views/newGameModalView.js";
 import movieTextDataView from "./views/MovieTextDataView.js";
 
 // HELPER FUNCTIONS
-async function getMovieHelpler() {}
 
 // only run when fetching movie
 function setAnswerValueHelper() {
@@ -41,20 +40,32 @@ async function createModelState() {
   }
 }
 
-function removePoints(points) {
-  model.removePoints(points);
-  answerValueView.renderData(model.state.answerValue);
-}
-function getMovie() {
-  setAnswerValueHelper();
+function renderAllData() {
   currentQuestionDataView.renderQuestionNum(model.state.currentQuestion);
-  model.returnRandomMovie();
   tileView.renderData();
   moviePosterView.renderData(model.state.currentMovie);
   titleView.renderData(model.state.currentMovie);
   scrambledTitleView.renderData(model.state.currentMovie);
-  movieTextDataView._clear();
-  movieTextDataView.renderButtons();
+  movieTextDataView.renderData(model.state.currentMovie);
+  movieTextDataView.renderButtonData();
+  submitAnswerView.reset();
+  movieTextDataView.enableBtns();
+}
+
+function removePoints(points) {
+  model.removePoints(points);
+  answerValueView.renderData(model.state.answerValue);
+}
+async function getMovie() {
+  try {
+    setAnswerValueHelper();
+    movieTextDataView.reset();
+    await model.returnRandomMovie();
+    renderAllData();
+    console.log(model.state.currentMovie.cast);
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 function gameOver() {
@@ -75,7 +86,7 @@ function gameOver() {
 async function controlGetMovies() {
   moviePosterView.renderSpinner();
   await createModelState();
-  getMovie();
+  await getMovie();
   console.log(model.state);
 }
 
@@ -93,15 +104,14 @@ function controlCheckAnswer() {
   }
 }
 
-function controlNextMovie() {
-  getMovie();
+async function controlNextMovie() {
+  await getMovie();
 }
 
 function playAgain() {
   model.resetScores();
   currentQuestionDataView.renderTotalPoints(model.state.currentPoints);
   getMovie();
-  submitAnswerView.reset();
 }
 
 function controlSetTiles(tile) {
@@ -111,9 +121,18 @@ function controlSetTiles(tile) {
 }
 
 function controlSynopsis() {
-  movieTextDataView.renderDataSynopsis(model.state.currentMovie.overview);
   movieTextDataView.hideSynopsisBtn();
   removePoints(SCORE_VALUES.SYNOPSIS_DEDUCTIONS);
+}
+
+function controlRelease() {
+  movieTextDataView.hideReleaseBtn();
+  removePoints(SCORE_VALUES.RELEASEDATE_DEDUCTIONS);
+}
+
+function controlCast() {
+  movieTextDataView.hideCastBtn();
+  removePoints(SCORE_VALUES.CAST_DEDUCTIONS);
 }
 
 function init() {
@@ -125,6 +144,8 @@ function init() {
   newGameModalView.addHandlerClickPlayAgain(playAgain);
   tileView.addHandlerClick(controlSetTiles);
   movieTextDataView.addHandlerClickSynopsis(controlSynopsis);
+  movieTextDataView.addHandlerClickCast(controlCast);
+  movieTextDataView.addHandlerClickRelease(controlRelease);
 }
 
 init();

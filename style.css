@@ -28,7 +28,6 @@ body {
 
 .movie-data-container {
   display: flex;
-  padding: 0 30px;
   max-width: 1200px;
   max-height: 360px;
   margin: auto;
@@ -423,6 +422,10 @@ h1 {
   .how-it-works-popup {
     width: 90%;
   }
+
+  .movie-data-container {
+    flex-direction: column;
+  }
 }
 
 .spinner {
@@ -458,6 +461,19 @@ h1 {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
+}
+
+.cast-container ul {
+  margin-left: 0;
+  padding-left: 0;
+}
+.cast-container li {
+  list-style: none;
+}
+
+.text-container,
+.points-value-container {
+  font-size: 13px;
 }
 
 .hidden {

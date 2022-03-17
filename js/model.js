@@ -6,6 +6,7 @@ import {
   SCORE_VALUES,
 } from "./config.js";
 import * as helpers from "./helpers.js";
+import newGameModalView from "./views/newGameModalView.js";
 
 export const state = {
   currentMovie: {},
@@ -34,6 +35,13 @@ export async function getAllMovies() {
   }
 
   //filterEnglishMovies();
+}
+
+//https://api.themoviedb.org/3/movie/458594/credits?api_key=a7181f2ad447e5c2b19cc987dd2cd250&language=en-US
+async function getCast() {
+  const url = `${API_DATA.URL}movie/${state.currentMovie.id}/credits?&api_key=${API_DATA.API_KEY}&${API_DATA.LANGUAGE}`;
+  const data = await movieApiCall(url);
+  state.currentMovie.cast = data.cast;
 }
 
 export function resetScores() {
@@ -70,11 +78,16 @@ async function movieApiCall(url) {
   }
 }
 
-export function returnRandomMovie() {
-  const randomIndex = helpers.random(0, state.allMovies.length - 1);
-  state.currentMovie = state.allMovies[randomIndex];
-  state.allMovies.splice(randomIndex, 1);
-  addToTotalPossiblePoints();
+export async function returnRandomMovie() {
+  try {
+    const randomIndex = helpers.random(0, state.allMovies.length - 1);
+    state.currentMovie = state.allMovies[randomIndex];
+    state.allMovies.splice(randomIndex, 1);
+    addToTotalPossiblePoints();
+    await getCast();
+  } catch (err) {
+    throw err;
+  }
 }
 
 export function removePoints(points) {
@@ -85,7 +98,6 @@ export function removePoints(points) {
 
 export function addToScore() {
   state.currentPoints += state.answerValue;
-  console.log(state.currentPoints, "<++ current POints");
   state.answerValue = SCORE_VALUES.ANSWER_VALUE;
 }
 
