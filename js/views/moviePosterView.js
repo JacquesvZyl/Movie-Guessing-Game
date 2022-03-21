@@ -15,7 +15,7 @@ class MoviePosterView extends view {
     const markup = `
     <img class="poster" src="${API_DATA.IMG_BASE}${data.poster_path}" alt="">
     `;
-    this._clear();
+    this.clear();
     this._parentEl.insertAdjacentHTML("beforeend", markup);
     console.dir(this._parentEl);
   }

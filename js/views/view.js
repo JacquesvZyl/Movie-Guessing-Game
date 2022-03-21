@@ -5,7 +5,7 @@ export default class View {
     this._parentEl.classList.toggle("hidden");
   }
 
-  _clear() {
+  clear() {
     this._parentEl.innerHTML = "";
   }
 
@@ -16,7 +16,7 @@ export default class View {
                 <use href="../../images/img/icons.svg#icon-loader"></use>
               </svg>
             </div>`;
-    this._clear();
+    this.clear();
     this._parentEl.insertAdjacentHTML("afterbegin", markup);
   }
 
@@ -26,7 +26,7 @@ export default class View {
               <p>${message}</p>
             </div>
       `;
-    this._clear();
+    this.clear();
     this._parentEl.insertAdjacentHTML("afterbegin", markup);
   }
 }

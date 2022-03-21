@@ -22,4 +22,4 @@ class InstructionsView extends view {
   }
 }
 
-export default new InstructionsView();
+//export default new InstructionsView();

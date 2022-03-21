@@ -34,7 +34,7 @@ class ScrambledTitleView extends view {
   }
 
   renderData(data) {
-    this._clear();
+    this.clear();
     if (!data) return this.renderError();
     this._data = data;
     const dataAttrArray = this._getDataAttribute(this._data.title);

@@ -1,5 +1,5 @@
 import * as model from "./model.js";
-import instructionsView from "./views/instructionsView.js";
+//import instructionsView from "./views/instructionsView.js";
 import moviePosterView from "./views/moviePosterView.js";
 import titleView from "./views/titleView.js";
 import scrambledTitleView from "./views/scrambledTitleView.js";
@@ -8,9 +8,10 @@ import tileView from "./views/tilesView.js";
 import answerValueView from "./views/answerValueView.js";
 import currentQuestionDataView from "./views/currentQuestionDataView.js";
 import newGameModalPopup from "./views/newGameModalView.js";
-import { SCORE_VALUES, TOTAL_PAGES } from "./config.js";
+import { SCORE_VALUES, API_DATA } from "./config.js";
 import newGameModalView from "./views/newGameModalView.js";
 import movieTextDataView from "./views/MovieTextDataView.js";
+import genreView from "./views/genreView.js";
 
 // HELPER FUNCTIONS
 
@@ -33,8 +34,13 @@ function setCurrentScoreHelper() {
 
 //do one big API call and save data to model.state
 async function createModelState() {
+  // url DISCOVER_MOVIE api_key=API_DATA&with_genres=genre
   try {
-    await model.getAllMovies();
+    const url =
+      model.state.selectedGenre != 9000
+        ? `${API_DATA.URL}${API_DATA.DISCOVER_MOVIE}api_key=${API_DATA.API_KEY}&with_genres=${model.state.selectedGenre}`
+        : `${API_DATA.URL}${API_DATA.POPULAR}&api_key=${API_DATA.API_KEY}&${API_DATA.LANGUAGE}`;
+    await model.getAllMovies(url);
   } catch (err) {
     throw err;
   }
@@ -56,13 +62,13 @@ function removePoints(points) {
   model.removePoints(points);
   answerValueView.renderData(model.state.answerValue);
 }
+
 async function getMovie() {
   try {
     setAnswerValueHelper();
     movieTextDataView.reset();
     await model.returnRandomMovie();
     renderAllData();
-    console.log(model.state.currentMovie.cast);
   } catch (err) {
     console.error(err);
   }
@@ -82,20 +88,12 @@ function gameOver() {
 
 // MAIN CONTROLLER FUNCTIONS
 
-//main new movie call function
-async function controlGetMovies() {
-  moviePosterView.renderSpinner();
-  await createModelState();
-  await getMovie();
-  console.log(model.state);
-}
-
 function controlCheckAnswer() {
   const isCorrect = titleView.checkAnswer();
   if (isCorrect) {
     gameOver();
     setCurrentScoreHelper();
-    tileView._clear();
+    tileView.clear();
     submitAnswerView.correctAnswer(model.state.gameOver);
     movieTextDataView.disableBtns();
   }
@@ -117,10 +115,10 @@ function playAgain() {
 function controlSetTiles(tile) {
   tileView.removeTile(tile);
   removePoints(SCORE_VALUES.TILE_DEDUCTIONS);
-  console.log(model.state.answerValue);
 }
 
 function controlSynopsis() {
+  console.log(model.state);
   movieTextDataView.hideSynopsisBtn();
   removePoints(SCORE_VALUES.SYNOPSIS_DEDUCTIONS);
 }
@@ -135,17 +133,58 @@ function controlCast() {
   removePoints(SCORE_VALUES.CAST_DEDUCTIONS);
 }
 
+async function controlGetGenreTypes() {
+  try {
+    model.resetScores();
+    if (!model.state.genres[0]) await model.getGenres();
+    genreView.toggleWindow();
+    titleView.clear();
+    genreView.renderData(model.state.genres);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+//main controller function that fetches all movies based on genre
+async function controlGetGenreMovies(genreId) {
+  try {
+    model.state.selectedGenre = Number(genreId);
+    moviePosterView.renderSpinner();
+    genreView.toggleWindow();
+    await createModelState();
+    await getMovie();
+    console.log(model.state);
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+function controlSkipMovie() {
+  titleView.renderCorrectTitle();
+  removePoints(100);
+  gameOver();
+  setCurrentScoreHelper();
+  tileView.clear();
+  scrambledTitleView.clear();
+  submitAnswerView.correctAnswer(model.state.gameOver);
+  movieTextDataView.disableBtns();
+}
+
 function init() {
   model.state.answerValue = SCORE_VALUES.ANSWER_VALUE;
   answerValueView.renderData(model.state.answerValue);
-  instructionsView.addHandlerClick(controlGetMovies);
+  //instructionsView.addHandlerClick(controlGetMovies);
   submitAnswerView.addHandlerClickSubmit(controlCheckAnswer);
   submitAnswerView.addHandlerClickNext(controlNextMovie);
+  submitAnswerView.addHandlerClickSkip(controlSkipMovie);
   newGameModalView.addHandlerClickPlayAgain(playAgain);
+  newGameModalView.addHandlerClickChangeGenre(controlGetGenreTypes);
   tileView.addHandlerClick(controlSetTiles);
   movieTextDataView.addHandlerClickSynopsis(controlSynopsis);
   movieTextDataView.addHandlerClickCast(controlCast);
   movieTextDataView.addHandlerClickRelease(controlRelease);
+  genreView.addHandlerLoad(controlGetGenreTypes);
+  genreView.addHandlerSubmit(controlGetGenreMovies);
 }
 
 init();

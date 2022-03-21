@@ -11,7 +11,7 @@ class ScrambledTitleView extends view {
     this._letterMoveHandler();
   }
 
-  _createTitleDiv(index, letter, className, isSpecialChar) {
+  _createTitleDiv(letter, className, isSpecialChar) {
     const newDiv = document.createElement("div");
     //prettier-ignore
     className.split(" ").forEach((classname) => newDiv.classList.add(classname));
@@ -21,16 +21,27 @@ class ScrambledTitleView extends view {
   }
 
   renderData(data) {
-    this._clear();
+    this.clear();
     if (!data) return this.renderError();
 
     data.title.split("").forEach((letter, i) => {
       const bool = letter.match(FORMAT);
       //prettier-ignore
       const className = bool ? "special-char-placeholder" : "border-true title-placeholder";
-      this._createTitleDiv(i, letter, className, bool);
+      this._createTitleDiv(letter, className, bool);
     });
     //const markup = `<div class="special-char-placeholder border-true">${finalString}</div>`;
+  }
+
+  //runs when skip button is pressed.
+  renderCorrectTitle() {
+    Array.from(this._parentEl.querySelectorAll(".title-placeholder")).forEach(
+      (el) => {
+        if (el.childElementCount > 0)
+          Array.from(el.children).forEach((e) => e.remove());
+        el.innerText = el.dataset.letter;
+      }
+    );
   }
 
   checkAnswer() {
@@ -45,9 +56,8 @@ class ScrambledTitleView extends view {
 
   _moveLetter(e) {
     const letter = e.target.closest(".letter-choice");
-    console.log(letter);
+
     if (!letter) return;
-    console.log(letter);
     console.log(this._attachEl);
     this._attachEl.appendChild(letter);
     letter.classList.add("border-true");
@@ -57,6 +67,8 @@ class ScrambledTitleView extends view {
   _letterMoveHandler() {
     this._parentEl.addEventListener("click", this._moveLetter.bind(this));
   }
+
+  //prettier-ignore
 }
 
 export default new ScrambledTitleView();

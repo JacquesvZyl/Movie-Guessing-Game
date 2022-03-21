@@ -38,6 +38,14 @@ class newGameModalPopup extends view {
       handler();
     });
   }
+  addHandlerClickChangeGenre(handler) {
+    this._parentEl.addEventListener("click", (e) => {
+      const btn = e.target.closest(".btn-change-genre");
+      if (!btn) return;
+      this.toggleWindow();
+      handler();
+    });
+  }
 }
 
 export default new newGameModalPopup();

@@ -11,23 +11,26 @@ import newGameModalView from "./views/newGameModalView.js";
 export const state = {
   currentMovie: {},
   allMovies: [],
+  genres: {},
+  selectedGenre: 0,
   pages: [],
   totalPoints: 0,
   currentPoints: 0,
-  answerValue: 0,
+  answerValue: SCORE_VALUES.ANSWER_VALUE,
   currentQuestion: 0,
   pointsOutOf: 0,
   gameOver: false,
 };
 
-export async function getAllMovies() {
+export async function getAllMovies(url) {
   try {
     getAllApiPages();
 
     for (const page of state.pages) {
       //prettier ignore
-      const url = `${API_DATA.URL}${API_DATA.POPULAR}&api_key=${API_DATA.API_KEY}&${API_DATA.LANGUAGE}&page=${page}`;
-      const data = await movieApiCall(url);
+      const urlPage = `${url}&page=${page}`;
+      //const url = `${API_DATA.URL}${API_DATA.POPULAR}&api_key=${API_DATA.API_KEY}&${API_DATA.LANGUAGE}&page=${page}`;
+      const data = await movieApiCall(urlPage);
       filterEnglishMovies(data.results);
     }
   } catch (err) {
@@ -35,6 +38,12 @@ export async function getAllMovies() {
   }
 
   //filterEnglishMovies();
+}
+
+export async function getGenres() {
+  const url = `${API_DATA.URL}${API_DATA.GENRES}?&api_key=${API_DATA.API_KEY}&${API_DATA.LANGUAGE}`;
+  const data = await movieApiCall(url);
+  state.genres = data.genres;
 }
 
 //https://api.themoviedb.org/3/movie/458594/credits?api_key=a7181f2ad447e5c2b19cc987dd2cd250&language=en-US

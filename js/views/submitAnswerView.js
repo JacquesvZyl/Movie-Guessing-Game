@@ -6,6 +6,7 @@ class SubmitAnswerView extends view {
   _parentEl = document.querySelector(".button-container");
   _errorMessage = "   Incorrect   ";
   _submitBtn = this._parentEl.querySelector(".submit-btn");
+  _skipBtn = this._parentEl.querySelector(".skip-btn");
   _nextBtn = this._parentEl.querySelector(".next-btn");
 
   constructor() {
@@ -16,6 +17,7 @@ class SubmitAnswerView extends view {
 
   reset() {
     this._submitBtn.disabled = false;
+    this._skipBtn.disabled = false;
     this._nextBtn.classList.add("hidden");
     console.log("RESET COMPLETE");
   }
@@ -23,6 +25,7 @@ class SubmitAnswerView extends view {
   // bool checks whether game is over or not
   correctAnswer(bool) {
     this._submitBtn.disabled = true;
+    this._skipBtn.disabled = true;
     bool
       ? this._nextBtn.classList.add("hidden")
       : this._nextBtn.classList.remove("hidden");
@@ -50,6 +53,13 @@ class SubmitAnswerView extends view {
       const btn = e.target.closest(".next-btn");
       if (!btn) return;
       this.reset();
+      handler();
+    });
+  }
+  addHandlerClickSkip(handler) {
+    this._parentEl.addEventListener("click", (e) => {
+      const btn = e.target.closest(".skip-btn");
+      if (!btn) return;
       handler();
     });
   }
