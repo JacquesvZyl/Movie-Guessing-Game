@@ -3,7 +3,8 @@ import { API_DATA } from "../config.js";
 
 class MoviePosterView extends view {
   _parentEl = document.querySelector(".poster-container");
-  _errorMessage = "Unable to load Movie Poster. Please try again";
+  _errorMessage =
+    "Unable to load Movie. Please try again by refreshing the page";
 
   constructor() {
     super();
@@ -17,7 +18,6 @@ class MoviePosterView extends view {
     `;
     this.clear();
     this._parentEl.insertAdjacentHTML("beforeend", markup);
-    console.dir(this._parentEl);
   }
 
   addHandlerClick(handler) {

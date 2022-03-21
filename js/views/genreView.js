@@ -3,7 +3,8 @@ import view from "./view.js";
 class GenreView extends view {
   _parentEl = document.querySelector(".how-it-works-popup");
   _formEl = document.querySelector(".genre-form");
-  _errorMessage = "Unable to load Genres. Please try again";
+  _errorMessage =
+    "Unable to load Genres. Please try again by refreshing the page";
 
   constructor() {
     super();
@@ -33,7 +34,6 @@ class GenreView extends view {
 
   addHandlerLoad(handler) {
     window.addEventListener("load", async (e) => {
-      console.log("running load genre");
       await handler();
     });
   }
@@ -42,7 +42,6 @@ class GenreView extends view {
     this._formEl.addEventListener("submit", async (e) => {
       e.preventDefault();
       const select = document.getElementById("genre");
-      console.log(select.options);
       const option = select.options[select.selectedIndex];
       await handler(option.value);
     });

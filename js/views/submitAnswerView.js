@@ -19,7 +19,6 @@ class SubmitAnswerView extends view {
     this._submitBtn.disabled = false;
     this._skipBtn.disabled = false;
     this._nextBtn.classList.add("hidden");
-    console.log("RESET COMPLETE");
   }
 
   // bool checks whether game is over or not

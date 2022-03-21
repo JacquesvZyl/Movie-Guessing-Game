@@ -58,7 +58,6 @@ class ScrambledTitleView extends view {
     const letter = e.target.closest(".letter-choice");
 
     if (!letter) return;
-    console.log(this._attachEl);
     this._attachEl.appendChild(letter);
     letter.classList.add("border-true");
     letter.classList.add("margin-between");

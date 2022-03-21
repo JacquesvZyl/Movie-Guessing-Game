@@ -34,7 +34,6 @@ class TilesView extends view {
   renderData() {
     const width = Number(this._posterEl.offsetWidth);
     const height = Number(this._posterEl.offsetHeight);
-    console.dir(this._posterEl);
     const tileWidth = (width / NUM_TILES_IN_ROW).toFixed(0);
     const tileHeight = (height / NUM_TILES_IN_ROW).toFixed(0);
     for (let i = 0; i < NUM_TILES_IN_ROW * NUM_TILES_IN_ROW; i++) {

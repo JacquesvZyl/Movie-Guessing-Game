@@ -70,7 +70,7 @@ async function getMovie() {
     await model.returnRandomMovie();
     renderAllData();
   } catch (err) {
-    console.error(err);
+    moviePosterView.renderError();
   }
 }
 
@@ -118,7 +118,6 @@ function controlSetTiles(tile) {
 }
 
 function controlSynopsis() {
-  console.log(model.state);
   movieTextDataView.hideSynopsisBtn();
   removePoints(SCORE_VALUES.SYNOPSIS_DEDUCTIONS);
 }
@@ -136,12 +135,12 @@ function controlCast() {
 async function controlGetGenreTypes() {
   try {
     model.resetScores();
-    if (!model.state.genres[0]) await model.getGenres();
     genreView.toggleWindow();
+    if (!model.state.genres[0]) await model.getGenres();
     titleView.clear();
     genreView.renderData(model.state.genres);
   } catch (err) {
-    console.error(err);
+    genreView.renderError();
   }
 }
 
@@ -153,9 +152,8 @@ async function controlGetGenreMovies(genreId) {
     genreView.toggleWindow();
     await createModelState();
     await getMovie();
-    console.log(model.state);
   } catch (err) {
-    console.error(err);
+    moviePosterView.renderError();
   }
 }
 
