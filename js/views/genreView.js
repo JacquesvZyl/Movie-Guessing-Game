@@ -49,22 +49,3 @@ class GenreView extends view {
 }
 
 export default new GenreView();
-
-/* 
-
-        <div class="how-it-works-popup">
-            <div class="how-it-works-popup-text-wrapper">
-                
-
-            <h4>HOW IT WORKS:</h4>
-            <p>Try to guess the movie by reading the movie synopsis. Each movie is worth 100 points.</p>
-            <p>Stuck? Click on the black question mark boxes to reveal a piece of the movie poster.</p>
-            <p>Revealing a part of the Movie poster will cost you 15 points</p>
-            <p>Alternatively, show the Movie Synopsis, cast or release date by clicking the buttons on the right of
-            the movie poster</p>
-            <button class="btn how-it-works-btn btn-styled">Got it!</button>
-            </div>
-            
-        </div>
-
-*/

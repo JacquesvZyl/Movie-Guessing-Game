@@ -120,35 +120,3 @@ class MovieTextDataView extends view {
 }
 
 export default new MovieTextDataView();
-
-/* 
-            <div class="text-container">
-
-
-
-                <div class="cast-container">
-                    <button class="btn-styled show-cast-btn hidden">Show Cast (-20pts)</button>
-                    <div class="cast-text">
-
-                    </div>
-                </div>
-
-                <div class="synopsis-container">
-                    <button class="btn-styled show-synopsis-btn hidden">Show Synopsis (-15pts)</button>
-                    <div class="synopsis-text">
-
-                    </div>
-                </div>
-                <div class="date-container">
-                </div>
-                <div class="release-date-container">
-                    <button class="btn-styled show-release-date-btn hidden">Show Release Date (-5pts)</button>
-
-                    <div class="release-date-text">
-
-                    </div>
-                </div>
-                <div class="cast-container">
-                </div>
-            </div>
-*/
