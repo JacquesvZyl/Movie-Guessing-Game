@@ -26,14 +26,3 @@ export const API_DATA = {
   CREDITS: "/credits?",
   GENRES: "/genre/movie/list",
 };
-
-// https://api.themoviedb.org/3/movie/popular?api_key=a7181f2ad447e5c2b19cc987dd2cd250&language=en-US&page=1
-
-// https://api.themoviedb.org/3movie/popular?&api_key=a7181f2ad447e5c2b19cc987dd2cd250&language=en-US&page=1
-
-// https://api.themoviedb.org/movie/popular?&api_key=a7181f2ad447e5c2b19cc987dd2cd250undefined&page=1
-
-//https://api.themoviedb.org/3/movie/458594/credits?api_key=a7181f2ad447e5c2b19cc987dd2cd250&language=en-US
-
-//url DISCOVER_MOVIE api_key=API_DATA&with_genres=genre
-//https://api.themoviedb.org/3/discover/movie?api_key=a7181f2ad447e5c2b19cc987dd2cd250&with_genres=27
