@@ -31,7 +31,7 @@ export async function getAllMovies(url) {
       const urlPage = `${url}&page=${page}`;
       //const url = `${API_DATA.URL}${API_DATA.POPULAR}&api_key=${API_DATA.API_KEY}&${API_DATA.LANGUAGE}&page=${page}`;
       const data = await movieApiCall(urlPage);
-      filterEnglishMovies(data.results);
+      filterMovies(data.results);
     }
   } catch (err) {
     throw err;
@@ -110,10 +110,10 @@ export function addToScore() {
   state.answerValue = SCORE_VALUES.ANSWER_VALUE;
 }
 
-//function to remove non-english movies
-function filterEnglishMovies(data) {
+//function to remove non-english movies && movies with no poster
+function filterMovies(data) {
   const results = data.filter((movie) => {
-    return movie.original_language === "en";
+    return movie.original_language === "en" && movie.poster_path;
   });
 
   state.allMovies.push(...results);

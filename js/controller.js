@@ -68,6 +68,7 @@ async function getMovie() {
     setAnswerValueHelper();
     movieTextDataView.reset();
     await model.returnRandomMovie();
+    console.log(model.state);
     renderAllData();
   } catch (err) {
     moviePosterView.renderError();
