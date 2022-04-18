@@ -46,7 +46,6 @@ export async function getGenres() {
   state.genres = data.genres;
 }
 
-//https://api.themoviedb.org/3/movie/458594/credits?api_key=a7181f2ad447e5c2b19cc987dd2cd250&language=en-US
 async function getCast() {
   const url = `${API_DATA.URL}movie/${state.currentMovie.id}/credits?&api_key=${API_DATA.API_KEY}&${API_DATA.LANGUAGE}`;
   const data = await movieApiCall(url);
